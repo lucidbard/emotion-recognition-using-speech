@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
   libfreetype6-dev \
   libpng-dev \
   portaudio19-dev \
+  libsndfile1 \
   && rm -rf /var/lib/apt/lists/*
 
 # Set the working directory in the container
@@ -17,8 +18,14 @@ WORKDIR /app
 # Copy the requirements file to the working directory
 COPY requirements.txt .
 
+# Install specific version of numba compatible with librosa 0.6.3
+RUN pip install --no-cache-dir numba==0.48
+
+# Upgrade pip
+RUN pip install --upgrade pip
+
 # Install Python dependencies
-RUN pip3 install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of the application code to the working directory
 COPY . .

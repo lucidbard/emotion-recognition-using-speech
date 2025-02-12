@@ -1,2 +1,4 @@
-*.wav
-*.pyc
+**/*.wav
+**/*.pyc
+__pycache__/*.pyc
+features/*.npy
